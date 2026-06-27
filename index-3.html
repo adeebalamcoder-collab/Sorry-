@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Win I Lose — A Public Apology</title>
+<meta name="description" content="You win. I lose. A cinematic, public apology built for Shazma — because a one-line sorry wasn't going to cut it.">
+<meta name="theme-color" content="#4A1326">
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Win I Lose — A Public Apology">
+<meta property="og:description" content="You win. I lose. A cinematic, public apology built for Shazma.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=1200&q=80">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Italiana&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ===================================================================
+   WIN I LOSE — PRODUCTION STYLESHEET
+   Inline by request for load reliability. Section-organized.
+   =================================================================== */
+
+:root{
+  --c-ivory:#FAF4EF;
+  --c-ivory-deep:#F3E9E3;
+  --c-blush:#E8C9CB;
+  --c-blush-soft:#F1DCDE;
+  --c-rose:#C97B8C;
+  --c-wine:#4A1326;
+  --c-wine-deep:#2E0B17;
+  --c-gold:#C9A66B;
+  --c-gold-soft:#E3CFA0;
+  --c-ink:#2B1A1F;
+  --c-white:#FFFFFF;
+
+  --font-display:'Cormorant Garamond', serif;
+  --font-accent:'Italiana', serif;
+  --font-body:'Manrope', sans-serif;
+
+  --container:1280px;
+  --radius-sm:10px;
+  --radius-md:18px;
+  --radius-lg:28px;
+  --ease:cubic-bezier(.22,1,.36,1);
+
+  --bg:var(--c-ivory);
+  --bg-deep:var(--c-ivory-deep);
+  --text:var(--c-ink);
+  --text-soft:rgba(43,26,31,.7);
+  --surface:rgba(255,255,255,.6);
+  --surface-border:rgba(255,255,255,.6);
+}
+
+[data-theme="dark"]{
+  --bg:#1B0E12;
+  --bg-deep:#150a0d;
+  --text:var(--c-ivory);
+  --text-soft:rgba(250,244,239,.7);
+  --surface:rgba(255,255,255,.06);
+  --surface-border:rgba(255,255,255,.12);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:auto;} /* Lenis handles smoothing in JS */
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  transition:background .5s var(--ease), color .5s var(--ease);
+}
+img{max-width:100%;display:block;}
+button{font-family:inherit;border:none;cursor:pointer;background:none;}
+a{text-decoration:none;color:inherit;}
+::selection{background:var(--c-rose);color:#fff;}
+
+/* Visually-hidden utility for accessibility labels */
+.sr-only{
+  position:absolute;width:1px;height:1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;
+}
+a:focus-visible,button:focus-visible,textarea:focus-visible,input:focus-visible{
+  outline:2px solid var(--c-gold);outline-offset:3px;border-radius:4px;
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important;}
+}
+
+/* ===================== LOADER ===================== */
+#loader{
+  position:fixed;inset:0;z-index:10000;
+  background:radial-gradient(circle at 50% 40%,var(--c-wine) 0%,var(--c-wine-deep) 70%);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .8s var(--ease), visibility .8s var(--ease);
+}
+#loader.is-hidden{opacity:0;visibility:hidden;pointer-events:none;}
+.loader-stage{display:flex;flex-direction:column;align-items:center;gap:22px;}
+.loader-mark{opacity:.9;}
+.loader-mark svg{display:block;}
+.loader-text{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.lt-line{font-family:var(--font-accent);font-size:34px;letter-spacing:.18em;color:var(--c-ivory);}
+.lt-fade{color:rgba(250,244,239,.35);}
+.loader-bar{width:220px;height:2px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden;}
+.loader-bar-fill{width:0%;height:100%;background:var(--c-gold);transition:width .2s linear;}
+.loader-pct{font-size:12px;letter-spacing:.1em;color:var(--c-gold-soft);font-family:var(--font-body);min-width:32px;text-align:center;}
+
+/* ===================== TYPE HELPERS ===================== */
+.eyebrow{
+  font-family:var(--font-body);font-size:13px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-rose);font-weight:600;
+  margin-bottom:18px;display:block;
+}
+.eyebrow-dark{color:var(--c-gold);}
+.eyebrow.center{text-align:center;}
+.section-title{
+  font-family:var(--font-display);font-weight:500;
+  font-size:clamp(34px,4.2vw,56px);line-height:1.15;letter-spacing:-.01em;
+  color:var(--text);
+}
+.section-title.center{text-align:center;}
+.section-title.light{color:var(--c-ivory);}
+.italic-accent{font-style:italic;color:var(--c-rose);}
+.section-title.light .italic-accent{color:var(--c-gold-soft);}
+
+/* split-text spans (for JS line/char reveal) */
+.split-line{display:block;overflow:hidden;}
+.split-line > span{display:inline-block;will-change:transform;}
+
+/* ===================== BUTTONS ===================== */
+.btn{
+  font-family:var(--font-body);font-weight:600;font-size:14.5px;
+  letter-spacing:.02em;padding:16px 30px;border-radius:50px;
+  display:inline-flex;align-items:center;gap:10px;position:relative;overflow:hidden;
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease),background .3s;
+}
+.btn-arrow{display:inline-block;transition:transform .35s var(--ease);}
+.btn:hover .btn-arrow{transform:translateX(4px);}
+.btn-primary{
+  background:linear-gradient(135deg,var(--c-wine),#6b1f38);
+  color:var(--c-gold-soft);
+  box-shadow:0 8px 30px -8px rgba(74,19,38,.55);
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 36px -8px rgba(74,19,38,.65);}
+.btn-primary:active{transform:translateY(-1px) scale(.98);}
+.btn-ghost{background:transparent;color:var(--text);border:1.4px solid rgba(43,26,31,.25);}
+[data-theme="dark"] .btn-ghost{border-color:rgba(250,244,239,.3);}
+.btn-ghost:hover{background:rgba(43,26,31,.06);transform:translateY(-2px);}
+[data-theme="dark"] .btn-ghost:hover{background:rgba(255,255,255,.06);}
+.btn-wide{width:100%;justify-content:center;}
+.btn[disabled]{opacity:.6;cursor:not-allowed;transform:none !important;}
+
+/* magnetic cta ripple */
+.btn .btn-ripple{
+  position:absolute;border-radius:50%;background:rgba(255,255,255,.35);
+  transform:scale(0);pointer-events:none;
+}
+.btn .btn-ripple.is-animating{animation:ripple .6s ease-out;}
+@keyframes ripple{to{transform:scale(2.6);opacity:0;}}
+
+/* ===================== GLASSMORPHISM ===================== */
+.glass-card{
+  background:var(--surface);
+  border:1px solid var(--surface-border);
+  backdrop-filter:blur(18px) saturate(160%);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);
+  box-shadow:0 20px 60px -20px rgba(74,19,38,.25);
+  border-radius:var(--radius-md);
+}
+.glass-chip{
+  background:rgba(255,255,255,.35);
+  border:1px solid rgba(255,255,255,.55);
+  backdrop-filter:blur(14px);
+  border-radius:50px;padding:10px 18px;
+  font-size:13px;color:var(--c-wine-deep);font-weight:600;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.chip-dot{width:7px;height:7px;border-radius:50%;background:var(--c-gold);box-shadow:0 0 0 4px rgba(201,166,107,.3);}
+
+/* ===================== SKIP LINK ===================== */
+.skip-link{
+  position:absolute;left:-999px;top:0;z-index:10001;
+  background:var(--c-wine);color:var(--c-ivory);padding:12px 20px;border-radius:0 0 10px 0;
+}
+.skip-link:focus{left:0;}
+
+/* ===================== NAVBAR ===================== */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  background:rgba(250,244,239,.7);
+  backdrop-filter:blur(18px) saturate(160%);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);
+  border-bottom:1px solid rgba(74,19,38,.08);
+  transition:transform .5s var(--ease), background .5s var(--ease), border-color .5s;
+}
+[data-theme="dark"] .navbar{background:rgba(27,14,18,.7);border-bottom-color:rgba(255,255,255,.08);}
+.navbar.nav-hidden{transform:translateY(-100%);}
+.nav-inner{
+  max-width:var(--container);margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 40px;
+}
+.nav-logo{font-family:var(--font-accent);font-size:21px;letter-spacing:.04em;color:var(--c-wine);}
+[data-theme="dark"] .nav-logo{color:var(--c-gold-soft);}
+.nav-logo-accent{color:var(--c-rose);}
+.nav-links{display:flex;gap:38px;}
+.nav-links a{
+  font-size:14px;font-weight:600;color:var(--text-soft);
+  position:relative;padding-bottom:4px;transition:color .3s;
+}
+.nav-links a::after{
+  content:'';position:absolute;left:0;bottom:0;width:0;height:1.5px;
+  background:var(--c-rose);transition:width .35s var(--ease);
+}
+.nav-links a:hover,.nav-links a.active{color:var(--c-wine);}
+[data-theme="dark"] .nav-links a:hover,[data-theme="dark"] .nav-links a.active{color:var(--c-gold-soft);}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+.nav-actions{display:flex;align-items:center;gap:18px;}
+.theme-toggle{
+  width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:var(--c-wine);background:rgba(74,19,38,.06);transition:background .3s,transform .3s;
+}
+[data-theme="dark"] .theme-toggle{color:var(--c-gold-soft);background:rgba(255,255,255,.06);}
+.theme-toggle:hover{background:rgba(74,19,38,.12);transform:rotate(20deg);}
+.theme-toggle svg{display:block;}
+.theme-icon-moon{display:none;}
+[data-theme="dark"] .theme-icon-sun{display:none;}
+[data-theme="dark"] .theme-icon-moon{display:block;}
+.nav-cta{
+  font-size:13.5px;font-weight:700;color:var(--c-ivory);
+  background:var(--c-wine);padding:11px 22px;border-radius:50px;
+  transition:transform .3s var(--ease),background .3s;
+}
+.nav-cta:hover{transform:translateY(-2px);background:var(--c-wine-deep);}
+.nav-burger{display:none;width:38px;height:38px;align-items:center;justify-content:center;color:var(--c-wine);}
+[data-theme="dark"] .nav-burger{color:var(--c-gold-soft);}
+
+/* mobile drawer (desktop-first: hidden by default, see media queries) */
+.nav-drawer{
+  position:fixed;inset:0;z-index:600;background:var(--c-wine-deep);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;
+  transform:translateY(-100%);transition:transform .5s var(--ease);
+}
+.nav-drawer.is-open{transform:translateY(0);}
+.nav-drawer a{font-family:var(--font-display);font-size:30px;color:var(--c-ivory);}
+.nav-drawer-close{position:absolute;top:24px;right:30px;color:var(--c-ivory);width:40px;height:40px;}
+
+/* progress bar tied to scroll */
+.scroll-progress{position:fixed;top:0;left:0;height:2.5px;background:linear-gradient(90deg,var(--c-rose),var(--c-gold));z-index:501;width:0%;}
+
+/* ===================== HERO ===================== */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  position:relative;overflow:hidden;padding:0 40px;
+}
+.hero-bg-image{
+  position:absolute;inset:0;background-size:cover;background-position:center;
+  filter:saturate(75%) brightness(.85);will-change:transform;
+}
+.hero-veil{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(74,19,38,.55) 0%,rgba(46,11,23,.75) 55%,rgba(46,11,23,.92) 100%);
+}
+.hero-grain{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.02) 0 1px,transparent 1px 3px);pointer-events:none;}
+.hero-content{position:relative;z-index:2;max-width:880px;margin:0 auto;text-align:center;}
+.hero .eyebrow{color:var(--c-gold-soft);text-align:center;}
+.hero-title{font-family:var(--font-display);line-height:1;margin-bottom:28px;}
+.ht-win{display:block;font-size:clamp(64px,9vw,128px);font-weight:500;color:var(--c-ivory);letter-spacing:-.01em;}
+.ht-lose{
+  display:block;font-size:clamp(64px,9vw,128px);font-weight:300;font-style:italic;
+  background:linear-gradient(90deg,var(--c-gold-soft),var(--c-blush));
+  -webkit-background-clip:text;background-clip:text;color:transparent;opacity:.85;
+}
+.hero-sub{font-size:18px;line-height:1.7;color:rgba(250,244,239,.8);max-width:620px;margin:0 auto 40px;font-weight:300;}
+.hero-sub em{font-style:italic;color:var(--c-gold-soft);}
+.hero-actions{display:flex;gap:18px;justify-content:center;margin-bottom:60px;}
+.hero .btn-ghost{border-color:rgba(250,244,239,.35);color:var(--c-ivory);}
+.hero .btn-ghost:hover{background:rgba(255,255,255,.08);}
+.hero-scroll-cue{display:flex;flex-direction:column;align-items:center;gap:10px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(250,244,239,.6);}
+.hero-scroll-cue .cue-line{width:1px;height:34px;background:linear-gradient(180deg,var(--c-gold),transparent);position:relative;overflow:hidden;}
+.hero-scroll-cue .cue-line::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--c-gold);animation:cueDrop 2.2s ease-in-out infinite;}
+@keyframes cueDrop{0%{top:-100%;}60%{top:100%;}100%{top:100%;}}
+.hero-card-float{position:absolute;bottom:50px;right:50px;z-index:3;}
+
+@media (min-width:1280px){
+  body{cursor:none;}
+}
+.cursor-dot,.cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;border-radius:50%;display:none;transform:translate(-50%,-50%);}
+@media (min-width:1280px){
+  .cursor-dot{display:block;width:6px;height:6px;background:var(--c-rose);transition:opacity .2s;}
+  .cursor-ring{display:block;width:32px;height:32px;border:1px solid rgba(201,123,140,.5);transition:width .25s var(--ease),height .25s var(--ease),border-color .25s,opacity .2s;}
+  .cursor-ring.is-hover{width:54px;height:54px;border-color:var(--c-gold);}
+}
+
+/* ===================== THE TRUTH ===================== */
+.truth{background:var(--c-wine-deep);color:var(--c-ivory);padding:160px 40px;position:relative;overflow:hidden;}
+.truth-inner{max-width:var(--container);margin:0 auto;display:grid;grid-template-columns:1fr 1.15fr;gap:90px;align-items:start;position:relative;z-index:2;}
+.truth .section-title{color:var(--c-ivory);}
+.truth-text{font-size:17px;line-height:1.85;color:rgba(250,244,239,.75);margin-bottom:22px;font-weight:300;}
+.truth-stats{display:flex;gap:44px;margin-top:40px;border-top:1px solid rgba(255,255,255,.12);padding-top:32px;}
+.t-stat{display:flex;flex-direction:column;gap:4px;}
+.t-num{font-family:var(--font-display);font-size:34px;color:var(--c-gold-soft);}
+.t-label{font-size:12.5px;color:rgba(250,244,239,.55);letter-spacing:.04em;}
+.truth-orb{position:absolute;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(201,166,107,.18),transparent 70%);top:-120px;right:-120px;pointer-events:none;}
+
+/* ===================== TIMELINE ===================== */
+.timeline-section{padding:160px 40px;background:var(--bg);transition:background .5s var(--ease);}
+.timeline-wrap{max-width:1040px;margin:80px auto 0;position:relative;}
+.timeline-spine{position:absolute;left:50%;top:0;bottom:0;width:1.5px;background:linear-gradient(180deg,transparent,var(--c-rose) 10%,var(--c-rose) 90%,transparent);transform:translateX(-50%);}
+.timeline-spine-fill{position:absolute;left:0;top:0;width:100%;height:0%;background:linear-gradient(180deg,var(--c-gold),var(--c-rose));}
+.t-item{display:grid;grid-template-columns:1fr 1fr;align-items:center;margin-bottom:60px;position:relative;}
+.t-left .t-card{grid-column:1;justify-self:end;margin-right:60px;}
+.t-right .t-card{grid-column:2;justify-self:start;margin-left:60px;}
+.t-card{padding:34px 32px;max-width:380px;}
+.t-tag{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--c-rose);font-weight:700;}
+.t-tag-gold{color:var(--c-gold);}
+.t-card h3{font-family:var(--font-display);font-size:24px;margin:10px 0 12px;font-weight:500;color:var(--text);}
+.t-card p{font-size:14.5px;line-height:1.65;color:var(--text-soft);}
+.glass-card-highlight{background:rgba(201,166,107,.1);border-color:rgba(201,166,107,.4);}
+.t-node{position:absolute;left:50%;top:50%;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2.5px solid var(--c-rose);transform:translate(-50%,-50%);}
+.t-node-active{background:var(--c-gold);border-color:var(--c-gold);box-shadow:0 0 0 6px rgba(201,166,107,.2);}
+
+/* ===================== GALLERY ===================== */
+.gallery-section{background:var(--c-wine);padding:160px 40px;}
+.gallery-head{max-width:var(--container);margin:0 auto 60px;}
+.gallery-head .section-title{color:var(--c-ivory);}
+.gallery-grid{max-width:var(--container);margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:18px;}
+.g-item{position:relative;border-radius:var(--radius-md);overflow:hidden;background:rgba(255,255,255,.05);}
+.g-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease);opacity:0;transition-property:transform,opacity;transition-duration:.6s,.5s;}
+.g-item img.is-loaded{opacity:1;}
+.g-item:hover img{transform:scale(1.06);}
+.g-tall{grid-row:span 2;}
+.g-wide{grid-column:span 2;}
+.g-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(46,11,23,.85));display:flex;align-items:flex-end;padding:20px;opacity:0;transition:opacity .4s;}
+.g-item:hover .g-overlay,.g-item:focus-within .g-overlay{opacity:1;}
+.g-overlay span{color:var(--c-ivory);font-size:14px;font-weight:500;}
+.g-skel{position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.04) 25%,rgba(255,255,255,.09) 37%,rgba(255,255,255,.04) 63%);background-size:400% 100%;animation:shimmer 1.4s ease infinite;}
+.g-item img.is-loaded ~ .g-skel{display:none;}
+@keyframes shimmer{0%{background-position:100% 0;}100%{background-position:-100% 0;}}
+
+/* ===================== JOURNAL ===================== */
+.journal-section{padding:160px 40px;background:var(--bg-deep);transition:background .5s var(--ease);}
+.journal-head{max-width:var(--container);margin:0 auto 60px;}
+.journal-grid{max-width:var(--container);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.j-card{padding:38px 32px;background:var(--surface);cursor:pointer;transition:transform .4s var(--ease),box-shadow .4s var(--ease);}
+.j-card:hover{transform:translateY(-8px);box-shadow:0 30px 70px -24px rgba(74,19,38,.35);}
+.j-date{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--c-gold);font-weight:700;}
+.j-card h3{font-family:var(--font-display);font-size:23px;margin:14px 0 14px;font-weight:500;line-height:1.3;color:var(--text);}
+.j-card p{font-size:14.5px;line-height:1.7;color:var(--text-soft);margin-bottom:22px;}
+.j-read{font-size:13.5px;font-weight:700;color:var(--c-wine);display:inline-flex;gap:6px;align-items:center;}
+[data-theme="dark"] .j-read{color:var(--c-gold-soft);}
+
+/* Journal modal */
+.j-modal-overlay{position:fixed;inset:0;background:rgba(20,8,12,.7);backdrop-filter:blur(6px);z-index:800;opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility .4s;display:flex;align-items:center;justify-content:center;padding:40px;}
+.j-modal-overlay.is-open{opacity:1;visibility:visible;}
+.j-modal{max-width:600px;background:var(--c-ivory);border-radius:var(--radius-lg);padding:56px;position:relative;transform:translateY(24px) scale(.97);transition:transform .4s var(--ease);max-height:80vh;overflow-y:auto;}
+.j-modal-overlay.is-open .j-modal{transform:translateY(0) scale(1);}
+.j-modal-close{position:absolute;top:24px;right:24px;width:36px;height:36px;border-radius:50%;background:rgba(74,19,38,.07);display:flex;align-items:center;justify-content:center;color:var(--c-wine);}
+.j-modal-date{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--c-gold);font-weight:700;}
+.j-modal h3{font-family:var(--font-display);font-size:30px;margin:16px 0 22px;color:var(--c-ink);}
+.j-modal p{font-size:16px;line-height:1.85;color:rgba(43,26,31,.78);margin-bottom:16px;font-weight:300;}
+
+/* ===================== LETTER ===================== */
+.letter-section{background:var(--c-wine-deep);padding:170px 40px;display:flex;justify-content:center;position:relative;}
+.letter-paper{max-width:680px;background:var(--c-ivory);padding:80px 70px;border-radius:var(--radius-lg);box-shadow:0 40px 90px -30px rgba(0,0,0,.5);position:relative;}
+.letter-mark{font-size:24px;color:var(--c-gold);margin-bottom:24px;}
+.letter-greeting{font-family:var(--font-display);font-size:30px;margin-bottom:26px;font-style:italic;color:var(--c-ink);}
+.letter-body{font-size:16.5px;line-height:1.9;color:rgba(43,26,31,.78);margin-bottom:22px;font-weight:300;}
+.letter-sign{font-family:var(--font-display);font-size:18px;margin-top:30px;line-height:1.6;color:var(--c-ink);}
+.letter-name{font-style:italic;color:var(--c-rose);font-size:22px;}
+
+/* ===================== VOW / CONTACT ===================== */
+.vow-section{position:relative;padding:170px 40px;overflow:hidden;}
+.vow-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:saturate(70%) brightness(.6);will-change:transform;}
+.vow-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(46,11,23,.85),rgba(46,11,23,.95));}
+.vow-content{position:relative;z-index:2;max-width:640px;margin:0 auto;text-align:center;}
+.vow-content .eyebrow{text-align:center;color:var(--c-gold-soft);}
+.vow-text{color:rgba(250,244,239,.7);font-size:16px;margin:20px 0 44px;font-weight:300;}
+.vow-form{padding:36px;text-align:left;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);}
+.vow-label{font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--c-gold-soft);font-weight:600;margin-bottom:12px;display:block;}
+.vow-textarea{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:var(--radius-sm);padding:16px;color:var(--c-ivory);font-family:var(--font-body);font-size:14.5px;resize:none;margin-bottom:20px;transition:border-color .3s;}
+.vow-textarea:focus{border-color:var(--c-gold);outline:none;}
+.vow-textarea::placeholder{color:rgba(250,244,239,.4);}
+.vow-foot-note{margin-top:34px;font-size:13px;color:rgba(250,244,239,.45);font-style:italic;}
+.vow-sent-msg{display:none;margin-top:16px;font-size:13.5px;color:var(--c-gold-soft);}
+.vow-sent-msg.is-shown{display:block;}
+
+/* ===================== FOOTER ===================== */
+.site-footer{background:var(--c-wine-deep);padding:50px 40px 40px;}
+.footer-inner{max-width:var(--container);margin:0 auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.1);padding-top:34px;}
+.footer-brand{font-family:var(--font-accent);font-size:18px;color:var(--c-ivory);}
+.footer-links{display:flex;gap:26px;}
+.footer-links a{font-size:13px;color:rgba(250,244,239,.55);}
+.footer-links a:hover{color:var(--c-gold-soft);}
+.footer-meta{font-size:12px;color:rgba(250,244,239,.4);}
+
+/* ===================== SCROLL REVEAL BASE STATES ===================== */
+[data-reveal]{opacity:0;transform:translateY(28px);}
+[data-reveal].is-revealed{opacity:1;transform:translateY(0);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+.t-card{opacity:0;transform:translateY(30px);}
+.t-card.is-revealed{opacity:1;transform:translateY(0);transition:opacity .8s var(--ease),transform .8s var(--ease);}
+.g-item{opacity:0;transform:translateY(24px);}
+.g-item.is-revealed{opacity:1;transform:translateY(0);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.j-card{opacity:0;transform:translateY(24px);}
+.j-card.is-revealed{opacity:1;transform:translateY(0);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width:1100px){
+  .truth-inner{grid-template-columns:1fr;gap:50px;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .journal-grid{grid-template-columns:1fr;max-width:560px;}
+  .nav-links{display:none;}
+  .nav-burger{display:flex;}
+  .t-item{grid-template-columns:1fr;}
+  .t-left .t-card,.t-right .t-card{grid-column:1;justify-self:stretch;margin:0 0 0 40px;max-width:none;}
+  .timeline-spine{left:14px;}
+  .t-node{left:14px;}
+}
+@media (max-width:760px){
+  .nav-inner{padding:16px 20px;}
+  .hero,.truth,.timeline-section,.gallery-section,.journal-section,.letter-section,.vow-section{padding-left:20px;padding-right:20px;}
+  .truth-inner{gap:36px;}
+  .truth-stats{flex-wrap:wrap;gap:28px;}
+  .gallery-grid{grid-template-columns:1fr;grid-auto-rows:280px;}
+  .g-tall,.g-wide{grid-row:span 1;grid-column:span 1;}
+  .letter-paper{padding:48px 28px;}
+  .hero-card-float{right:20px;bottom:30px;}
+  .footer-inner{flex-direction:column;gap:18px;text-align:center;}
+  .footer-links{flex-wrap:wrap;justify-content:center;gap:16px;}
+  .hero-actions{flex-direction:column;width:100%;}
+  .hero-actions .btn{width:100%;justify-content:center;}
+}</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<!-- ===================== LOADER ===================== -->
+<div id="loader" role="status" aria-live="polite">
+  <div class="loader-stage">
+    <div class="loader-mark" aria-hidden="true">
+      <svg width="56" height="56" viewBox="0 0 64 64" fill="none">
+        <path d="M32 56C32 56 8 41.5 8 23.5C8 14.4 15 8 23 8C27 8 30.5 10 32 13.5C33.5 10 37 8 41 8C49 8 56 14.4 56 23.5C56 41.5 32 56 32 56Z" stroke="#C9A66B" stroke-width="1.4" fill="none"/>
+      </svg>
+    </div>
+    <div class="loader-text">
+      <span class="lt-line">YOU WIN</span>
+      <span class="lt-line lt-fade">I LOSE</span>
+    </div>
+    <div class="loader-bar"><div class="loader-bar-fill" id="loaderFill"></div></div>
+    <div class="loader-pct" id="loaderPct">0%</div>
+  </div>
+</div>
+
+<!-- ===================== NAVBAR ===================== -->
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo">Win<span class="nav-logo-accent">I</span>Lose</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#home" class="active" data-nav>Home</a>
+      <a href="#truth" data-nav>The Truth</a>
+      <a href="#timeline" data-nav>Our Timeline</a>
+      <a href="#gallery" data-nav>Gallery</a>
+      <a href="#journal" data-nav>Journal</a>
+      <a href="#vow" data-nav>The Vow</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
+        <svg class="theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.4 6.4-.7-.7M6.3 6.3l-.7-.7m12.8 0-.7.7M6.3 17.7l-.7.7M12 7a5 5 0 100 10 5 5 0 000-10z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <svg class="theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 1 0 10.5 10.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="nav-cta" id="navLetterCta">Read The Letter</button>
+      <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== MOBILE DRAWER ===================== -->
+<div class="nav-drawer" id="navDrawer">
+  <button class="nav-drawer-close" id="navDrawerClose" aria-label="Close menu">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+  </button>
+  <a href="#home" data-nav-drawer>Home</a>
+  <a href="#truth" data-nav-drawer>The Truth</a>
+  <a href="#timeline" data-nav-drawer>Our Timeline</a>
+  <a href="#gallery" data-nav-drawer>Gallery</a>
+  <a href="#journal" data-nav-drawer>Journal</a>
+  <a href="#vow" data-nav-drawer>The Vow</a>
+</div>
+
+<main id="main">
+
+<!-- ===================== HOME / HERO ===================== -->
+<section class="hero" id="home" aria-label="Introduction">
+  <div class="hero-bg-image" id="heroBg" style="background-image:url('https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=1920&q=80&fm=webp')" role="img" aria-label="Two silhouettes against a dusk sky"></div>
+  <div class="hero-veil"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-content">
+    <p class="eyebrow" data-reveal>A confession, in public — June 27</p>
+    <h1 class="hero-title">
+      <span class="ht-win split-line" data-split>You Win.</span>
+      <span class="ht-lose split-line" data-split>I Lose.</span>
+    </h1>
+    <p class="hero-sub" data-reveal>She won the argument, fair and square. I'm conceding on the record — being &quot;right&quot; was never worth making <em>Shazma</em> sit there annoyed at me.</p>
+    <div class="hero-actions" data-reveal>
+      <button class="btn btn-primary" data-scroll-to="#letter">Read My Apology <span class="btn-arrow" aria-hidden="true">→</span></button>
+      <button class="btn btn-ghost" data-scroll-to="#timeline">See Our Timeline</button>
+    </div>
+    <button class="hero-scroll-cue" data-scroll-to="#truth" aria-label="Scroll to next section">
+      <span class="cue-line" aria-hidden="true"></span>Scroll
+    </button>
+  </div>
+  <div class="hero-card-float" aria-hidden="true">
+    <div class="glass-chip">
+      <span class="chip-dot"></span>
+      Status: officially wrong, finally admitting it
+    </div>
+  </div>
+</section>
+
+<!-- ===================== THE TRUTH ===================== -->
+<section class="truth" id="truth" aria-label="The Truth">
+  <div class="truth-orb" aria-hidden="true"></div>
+  <div class="truth-inner">
+    <div class="truth-left">
+      <p class="eyebrow eyebrow-dark" data-reveal>Why I'm not fighting this one</p>
+      <h2 class="section-title" data-reveal>You were right.<br>I was <span class="italic-accent">just slow</span> to say it.</h2>
+    </div>
+    <div class="truth-right">
+      <p class="truth-text" data-reveal>I argued a point that didn't matter, lost track of the part that did, and let you sit there annoyed while I &quot;made my case.&quot; Turns out the case was bad. You were right the whole time.</p>
+      <p class="truth-text" data-reveal>No clever excuse here. Just me admitting it in writing, where I can't quietly edit it later.</p>
+      <div class="truth-stats" data-reveal>
+        <div class="t-stat"><span class="t-num" data-count="100" data-suffix="%">0%</span><span class="t-label">My fault, on record</span></div>
+        <div class="t-stat"><span class="t-num" data-count="0">0</span><span class="t-label">Excuses, even one</span></div>
+        <div class="t-stat"><span class="t-num" data-count="1">0</span><span class="t-label">Site built just for this</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TIMELINE ===================== -->
+<section class="timeline-section" id="timeline" aria-label="Our Timeline">
+  <p class="eyebrow center" data-reveal>Every chapter, before this one</p>
+  <h2 class="section-title center" data-reveal>Us, so far</h2>
+  <div class="timeline-wrap">
+    <div class="timeline-spine"><div class="timeline-spine-fill" id="spineFill"></div></div>
+
+    <div class="t-item t-left">
+      <div class="t-card glass-card">
+        <span class="t-tag">Chapter One</span>
+        <h3>Before the chaos</h3>
+        <p>There was a version of this where nobody had to be &quot;right.&quot; Just two people, no arguments, no point-scoring.</p>
+      </div>
+      <div class="t-node"></div>
+    </div>
+
+    <div class="t-item t-right">
+      <div class="t-card glass-card">
+        <span class="t-tag">Chapter Two</span>
+        <h3>Things got real</h3>
+        <p>Somewhere along the way, this stopped being casual. Which is exactly why one stupid fight isn't allowed to wreck it.</p>
+      </div>
+      <div class="t-node"></div>
+    </div>
+
+    <div class="t-item t-left">
+      <div class="t-card glass-card">
+        <span class="t-tag">Chapter Three</span>
+        <h3>The fight</h3>
+        <p>I got loud about being right. You got quiet, which should've told me I'd already lost — just not the way I thought.</p>
+      </div>
+      <div class="t-node t-node-active"></div>
+    </div>
+
+    <div class="t-item t-right">
+      <div class="t-card glass-card glass-card-highlight">
+        <span class="t-tag t-tag-gold">Chapter Four — Today</span>
+        <h3>The concession</h3>
+        <p>You win. Officially, publicly, in writing. Some arguments aren't worth winning — this was one of them.</p>
+      </div>
+      <div class="t-node t-node-active"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GALLERY ===================== -->
+<section class="gallery-section" id="gallery" aria-label="Gallery">
+  <div class="gallery-head">
+    <p class="eyebrow eyebrow-dark" data-reveal>Exhibit A through E</p>
+    <h2 class="section-title" data-reveal>Evidence I've been<br>thinking about this <span class="italic-accent">too much</span></h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="g-item g-tall">
+      <div class="g-skel" aria-hidden="true"></div>
+      <img data-src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=900&q=80&fm=webp" alt="Storm clouds breaking into clear sky" loading="lazy" width="900" height="1200">
+      <div class="g-overlay"><span>The mood before I admitted I was wrong</span></div>
+    </div>
+    <div class="g-item">
+      <div class="g-skel" aria-hidden="true"></div>
+      <img data-src="https://images.unsplash.com/photo-1518621736915-f3b3c1b97928?w=900&q=80&fm=webp" alt="Pink and white roses close up" loading="lazy" width="900" height="600">
+      <div class="g-overlay"><span>Flowers. Yes, really. I went there.</span></div>
+    </div>
+    <div class="g-item">
+      <div class="g-skel" aria-hidden="true"></div>
+      <img data-src="https://images.unsplash.com/photo-1522748906645-95d8adfd52c7?w=900&q=80&fm=webp" alt="Handwritten letter on a table" loading="lazy" width="900" height="600">
+      <div class="g-overlay"><span>Draft 7 of the letter below</span></div>
+    </div>
+    <div class="g-item g-tall">
+      <div class="g-skel" aria-hidden="true"></div>
+      <img data-src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=900&q=80&fm=webp" alt="Two silhouettes against a sunset sky" loading="lazy" width="900" height="1200">
+      <div class="g-overlay"><span>Less arguing, more this</span></div>
+    </div>
+    <div class="g-item g-wide">
+      <div class="g-skel" aria-hidden="true"></div>
+      <img data-src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=1400&q=80&fm=webp" alt="Soft pink clouds at dusk" loading="lazy" width="1400" height="600">
+      <div class="g-overlay"><span>The calm after I stop being stubborn</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== JOURNAL ===================== -->
+<section class="journal-section" id="journal" aria-label="Journal">
+  <div class="journal-head">
+    <p class="eyebrow center" data-reveal>Notes to self, made public</p>
+    <h2 class="section-title center" data-reveal>The Journal</h2>
+  </div>
+  <div class="journal-grid">
+    <article class="j-card glass-card" tabindex="0" data-journal="0">
+      <span class="j-date">Entry 01</span>
+      <h3>I rehearsed this and still messed it up</h3>
+      <p>Had a whole speech ready. Said none of it right in person. Writing it down because apparently that's the only format I don't fumble.</p>
+      <span class="j-read">Read entry <span class="btn-arrow" aria-hidden="true">→</span></span>
+    </article>
+    <article class="j-card glass-card" tabindex="0" data-journal="1">
+      <span class="j-date">Entry 02</span>
+      <h3>Being right is overrated</h3>
+      <p>Mistakes might be what make this whole thing interesting. Doesn't make them fun to admit to. Still — noted, and not repeating this one.</p>
+      <span class="j-read">Read entry <span class="btn-arrow" aria-hidden="true">→</span></span>
+    </article>
+    <article class="j-card glass-card" tabindex="0" data-journal="2">
+      <span class="j-date">Entry 03</span>
+      <h3>Shazma, if you're reading this</h3>
+      <p>I'm not asking you to forget it happened. I'm asking for a chance to not do it again — starting now, not from some imaginary improved version of me.</p>
+      <span class="j-read">Read entry <span class="btn-arrow" aria-hidden="true">→</span></span>
+    </article>
+  </div>
+</section>
+
+<!-- Journal modal -->
+<div class="j-modal-overlay" id="journalModal" role="dialog" aria-modal="true" aria-labelledby="jModalTitle">
+  <div class="j-modal">
+    <button class="j-modal-close" id="journalModalClose" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    </button>
+    <span class="j-modal-date" id="jModalDate">Entry 01</span>
+    <h3 id="jModalTitle">Title</h3>
+    <div id="jModalBody"></div>
+  </div>
+</div>
+
+<!-- ===================== THE LETTER ===================== -->
+<section class="letter-section" id="letter" aria-label="The Letter">
+  <div class="letter-paper" data-reveal>
+    <div class="letter-mark" aria-hidden="true">✦</div>
+    <p class="letter-greeting">Shazma,</p>
+    <p class="letter-body">I've replayed that argument a dozen times and landed in the same place every time — you were right, and I knew it even while I kept talking like I wasn't. That's the actual problem here. Not the disagreement. The part where I let you sit there annoyed while I &quot;made my case&quot; for something that didn't even matter.</p>
+    <p class="letter-body">You don't owe this site, or me, anything. I built it anyway because a one-line &quot;sorry&quot; felt too easy for how wrong I was. So here's the harder version: I was wrong, you were right, and no amount of clever wording changes that.</p>
+    <p class="letter-body">You win. Officially. On the record. I'd rather concede this one cleanly than keep being &quot;right&quot; and have you stay annoyed at me over something this small.</p>
+    <p class="letter-sign">Properly sorry this time,<br><span class="letter-name">Adeeb</span></p>
+  </div>
+</section>
+
+<!-- ===================== THE VOW / CONTACT ===================== -->
+<section class="vow-section" id="vow" aria-label="The Vow">
+  <div class="vow-bg" id="vowBg" style="background-image:url('https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=1920&q=80&fm=webp')" role="img" aria-label="Soft pink clouds at dusk"></div>
+  <div class="vow-veil"></div>
+  <div class="vow-content">
+    <p class="eyebrow" data-reveal>Last page. Last word.</p>
+    <h2 class="section-title light" data-reveal>If you read all of this,<br>I'd like five minutes — in person.</h2>
+    <p class="vow-text" data-reveal>Not a reply on this page. An actual conversation. That's the ask.</p>
+    <form class="vow-form glass-card" id="vowForm" data-reveal novalidate>
+      <label class="vow-label" for="vowMessage">A word back, if you want to send one</label>
+      <textarea class="vow-textarea" id="vowMessage" name="message" rows="3" placeholder="Say anything. Or nothing — I built the whole site, I can wait a bit longer." required></textarea>
+      <button class="btn btn-primary btn-wide" type="submit">Send It To Him <span class="btn-arrow" aria-hidden="true">→</span></button>
+      <p class="vow-sent-msg" id="vowSentMsg" role="status">Your mail app should be opening now — just hit send there.</p>
+    </form>
+    <div class="vow-foot-note">Built by Adeeb, for Shazma, because texting &quot;sorry&quot; clearly wasn't going to cut it.</div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">Win<span class="nav-logo-accent">I</span>Lose</div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="#home">Home</a><a href="#truth">The Truth</a><a href="#timeline">Timeline</a><a href="#gallery">Gallery</a><a href="#journal">Journal</a><a href="#letter">The Letter</a><a href="#vow">The Vow</a>
+    </nav>
+    <div class="footer-meta">© 2026 · A private apology, made public. Built with care, not excuses.</div>
+  </div>
+</footer>
+
+<!-- Custom cursor (desktop only, ≥1280px — see CSS) -->
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+<script src="https://cdn.jsdelivr.net/gh/darkroomengineering/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* ===================================================================
+   WIN I LOSE — main.js
+   Vanilla JS modules: loader, cursor, theme, smooth scroll, reveals,
+   journal modal, counters, gallery lazy-load, mailto form.
+   No frameworks. Organized as small self-contained modules (IIFEs).
+   =================================================================== */
+
+(function () {
+  "use strict";
+
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hasGSAP = typeof window.gsap !== "undefined";
+  if (hasGSAP && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+
+  /* ============================================================
+     MODULE: Loader
+     Simulates asset-aware progress, then reveals the page.
+     ============================================================ */
+  var Loader = {
+    init: function () {
+      var loader = document.getElementById("loader");
+      var fill = document.getElementById("loaderFill");
+      var pct = document.getElementById("loaderPct");
+      if (!loader) return;
+
+      var progress = 0;
+      var target = 0;
+      var raf;
+
+      function bump(to) {
+        target = Math.min(100, to);
+      }
+
+      function tick() {
+        progress += (target - progress) * 0.12;
+        if (target - progress < 0.5) progress = target;
+        var shown = Math.round(progress);
+        if (fill) fill.style.width = shown + "%";
+        if (pct) pct.textContent = shown + "%";
+        if (progress < 100) {
+          raf = requestAnimationFrame(tick);
+        }
+      }
+      raf = requestAnimationFrame(tick);
+
+      bump(35);
+      window.addEventListener("DOMContentLoaded", function () { bump(70); }, { once: true });
+
+      function finish() {
+        bump(100);
+        setTimeout(function () {
+          loader.classList.add("is-hidden");
+          document.body.style.overflow = "";
+          document.dispatchEvent(new CustomEvent("app:loaded"));
+        }, 450);
+      }
+
+      if (document.readyState === "complete") {
+        finish();
+      } else {
+        window.addEventListener("load", finish);
+        // safety fallback so a slow/failed asset never traps the user
+        setTimeout(finish, 4000);
+      }
+
+      document.body.style.overflow = "hidden";
+    }
+  };
+
+  /* ============================================================
+     MODULE: Theme (dark / light) with localStorage persistence
+     ============================================================ */
+  var Theme = {
+    key: "wil-theme",
+    init: function () {
+      var toggle = document.getElementById("themeToggle");
+      var stored = null;
+      try { stored = localStorage.getItem(this.key); } catch (e) {}
+      var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      var initial = stored || (prefersDark ? "dark" : "light");
+      this.apply(initial);
+
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          var current = document.documentElement.getAttribute("data-theme") || "light";
+          var next = current === "dark" ? "light" : "dark";
+          Theme.apply(next);
+          try { localStorage.setItem(Theme.key, next); } catch (e) {}
+        });
+      }
+    },
+    apply: function (mode) {
+      if (mode === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+      }
+      var toggle = document.getElementById("themeToggle");
+      if (toggle) toggle.setAttribute("aria-pressed", mode === "dark" ? "true" : "false");
+    }
+  };
+
+  /* ============================================================
+     MODULE: Smooth scroll (Lenis if available, native fallback)
+     ============================================================ */
+  var SmoothScroll = {
+    lenis: null,
+    init: function () {
+      if (reduceMotion) return; // respect user preference, skip custom smoothing
+      if (typeof window.Lenis === "function") {
+        this.lenis = new window.Lenis({
+          duration: 1.05,
+          easing: function (t) { return 1 - Math.pow(1 - t, 3); },
+          smoothWheel: true
+        });
+        var lenis = this.lenis;
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        if (hasGSAP && window.ScrollTrigger) {
+          lenis.on("scroll", ScrollTrigger.update);
+          gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+          gsap.ticker.lagSmoothing(0);
+        }
+      }
+    },
+    scrollTo: function (target) {
+      if (this.lenis) {
+        this.lenis.scrollTo(target, { offset: -10 });
+      } else {
+        var el = typeof target === "string" ? document.querySelector(target) : target;
+        if (el) el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      }
+    }
+  };
+
+  /* ============================================================
+     MODULE: Navigation (active link tracking, scroll-to buttons,
+     hide-on-scroll-down navbar, mobile drawer, scroll progress bar)
+     ============================================================ */
+  var Nav = {
+    init: function () {
+      var navbar = document.getElementById("navbar");
+      var progress = document.getElementById("scrollProgress");
+      var lastY = window.scrollY;
+      var sections = Array.prototype.slice.call(document.querySelectorAll("main > section[id]"));
+      var navLinks = Array.prototype.slice.call(document.querySelectorAll("[data-nav]"));
+
+      // scroll-to buttons (hero CTAs, scroll cue)
+      Array.prototype.slice.call(document.querySelectorAll("[data-scroll-to]")).forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          SmoothScroll.scrollTo(btn.getAttribute("data-scroll-to"));
+        });
+      });
+
+      navLinks.concat(Array.prototype.slice.call(document.querySelectorAll("[data-nav-drawer]"))).forEach(function (link) {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          var target = link.getAttribute("href");
+          SmoothScroll.scrollTo(target);
+          Drawer.close();
+        });
+      });
+
+      var navLetterCta = document.getElementById("navLetterCta");
+      if (navLetterCta) {
+        navLetterCta.addEventListener("click", function () { SmoothScroll.scrollTo("#letter"); });
+      }
+
+      function onScroll() {
+        var y = window.scrollY;
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (progress) progress.style.width = (docHeight > 0 ? (y / docHeight) * 100 : 0) + "%";
+
+        if (navbar) {
+          if (y > lastY && y > 140) {
+            navbar.classList.add("nav-hidden");
+          } else {
+            navbar.classList.remove("nav-hidden");
+          }
+        }
+        lastY = y;
+
+        // active section highlight
+        var current = sections[0];
+        sections.forEach(function (sec) {
+          var rect = sec.getBoundingClientRect();
+          if (rect.top <= 140) current = sec;
+        });
+        if (current) {
+          navLinks.forEach(function (link) {
+            link.classList.toggle("active", link.getAttribute("href") === "#" + current.id);
+          });
+        }
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    }
+  };
+
+  var Drawer = {
+    init: function () {
+      var burger = document.getElementById("navBurger");
+      var drawer = document.getElementById("navDrawer");
+      var close = document.getElementById("navDrawerClose");
+      if (!burger || !drawer) return;
+
+      burger.addEventListener("click", function () {
+        drawer.classList.add("is-open");
+        burger.setAttribute("aria-expanded", "true");
+        document.body.style.overflow = "hidden";
+      });
+      if (close) close.addEventListener("click", Drawer.close);
+      drawer.addEventListener("click", function (e) {
+        if (e.target === drawer) Drawer.close();
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") Drawer.close();
+      });
+    },
+    close: function () {
+      var burger = document.getElementById("navBurger");
+      var drawer = document.getElementById("navDrawer");
+      if (drawer) drawer.classList.remove("is-open");
+      if (burger) burger.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    }
+  };
+
+  /* ============================================================
+     MODULE: Custom cursor (desktop only — CSS hides below 1280px)
+     ============================================================ */
+  var Cursor = {
+    init: function () {
+      if (window.innerWidth < 1280 || reduceMotion) return;
+      var dot = document.getElementById("cursorDot");
+      var ring = document.getElementById("cursorRing");
+      if (!dot || !ring) return;
+
+      var mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+      var ringX = mouseX, ringY = mouseY;
+
+      window.addEventListener("mousemove", function (e) {
+        mouseX = e.clientX; mouseY = e.clientY;
+        dot.style.transform = "translate(" + mouseX + "px," + mouseY + "px) translate(-50%,-50%)";
+      });
+
+      function loop() {
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        ring.style.transform = "translate(" + ringX + "px," + ringY + "px) translate(-50%,-50%)";
+        requestAnimationFrame(loop);
+      }
+      loop();
+
+      var hoverables = "a, button, .j-card, .g-item, textarea";
+      document.addEventListener("mouseover", function (e) {
+        if (e.target.closest(hoverables)) ring.classList.add("is-hover");
+      });
+      document.addEventListener("mouseout", function (e) {
+        if (e.target.closest(hoverables)) ring.classList.remove("is-hover");
+      });
+    }
+  };
+
+  /* ============================================================
+     MODULE: Scroll reveals (GSAP ScrollTrigger if present,
+     IntersectionObserver fallback otherwise)
+     ============================================================ */
+  var Reveal = {
+    init: function () {
+      var targets = Array.prototype.slice.call(
+        document.querySelectorAll("[data-reveal], .t-card, .g-item, .j-card")
+      );
+      if (reduceMotion) {
+        targets.forEach(function (el) { el.classList.add("is-revealed"); });
+        return;
+      }
+      if (!("IntersectionObserver" in window)) {
+        targets.forEach(function (el) { el.classList.add("is-revealed"); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.18, rootMargin: "0px 0px -40px 0px" });
+      targets.forEach(function (el) { io.observe(el); });
+    }
+  };
+
+  /* ============================================================
+     MODULE: Hero split-text intro + parallax backgrounds
+     ============================================================ */
+  var HeroFX = {
+    init: function () {
+      var heroBg = document.getElementById("heroBg");
+      var vowBg = document.getElementById("vowBg");
+
+      if (hasGSAP) {
+        var splits = document.querySelectorAll("[data-split]");
+        splits.forEach(function (line) {
+          var text = line.textContent;
+          line.innerHTML = "<span>" + text + "</span>";
+        });
+
+        document.addEventListener("app:loaded", function () {
+          gsap.timeline()
+            .from(splits, {
+              yPercent: 110, opacity: 0, duration: 1.1, ease: "power4.out", stagger: 0.12
+            })
+            .from("[data-reveal]", {
+              opacity: 0, y: 24, duration: 0.9, ease: "power3.out", stagger: 0.1
+            }, "-=0.5");
+        }, { once: true });
+
+        if (!reduceMotion && window.ScrollTrigger) {
+          [heroBg, vowBg].forEach(function (bg) {
+            if (!bg) return;
+            gsap.to(bg, {
+              yPercent: 12,
+              ease: "none",
+              scrollTrigger: {
+                trigger: bg.closest("section"),
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+              }
+            });
+          });
+        }
+      } else {
+        // No GSAP fallback: just reveal immediately
+        document.querySelectorAll("[data-split], [data-reveal]").forEach(function (el) {
+          el.style.opacity = "1";
+        });
+      }
+    }
+  };
+
+  /* ============================================================
+     MODULE: Timeline spine fill (tracks scroll progress through
+     the timeline section specifically — encodes "how far along")
+     ============================================================ */
+  var TimelineSpine = {
+    init: function () {
+      var wrap = document.querySelector(".timeline-wrap");
+      var fill = document.getElementById("spineFill");
+      if (!wrap || !fill) return;
+
+      function update() {
+        var rect = wrap.getBoundingClientRect();
+        var vh = window.innerHeight;
+        var total = rect.height + vh * 0.5;
+        var seen = Math.min(total, Math.max(0, vh * 0.6 - rect.top));
+        var pct = total > 0 ? (seen / total) * 100 : 0;
+        fill.style.height = Math.min(100, Math.max(0, pct)) + "%";
+      }
+      window.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", update);
+      update();
+    }
+  };
+
+  /* ============================================================
+     MODULE: Stat counters ("100%", "0", "1") — animate on reveal
+     ============================================================ */
+  var Counters = {
+    init: function () {
+      var nodes = Array.prototype.slice.call(document.querySelectorAll("[data-count]"));
+      if (!nodes.length) return;
+
+      function animate(el) {
+        var end = parseInt(el.getAttribute("data-count"), 10);
+        var suffix = el.getAttribute("data-suffix") || "";
+        if (reduceMotion) {
+          el.textContent = end + suffix;
+          return;
+        }
+        var start = 0;
+        var duration = 1100;
+        var startTime = null;
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          var progress = Math.min(1, (ts - startTime) / duration);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          var val = Math.round(start + (end - start) * eased);
+          el.textContent = val + suffix;
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              animate(entry.target);
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.6 });
+        nodes.forEach(function (el) { io.observe(el); });
+      } else {
+        nodes.forEach(animate);
+      }
+    }
+  };
+
+  /* ============================================================
+     MODULE: Gallery lazy-load (manual data-src swap + skeleton)
+     ============================================================ */
+  var Gallery = {
+    init: function () {
+      var imgs = Array.prototype.slice.call(document.querySelectorAll(".g-item img[data-src]"));
+      if (!imgs.length) return;
+
+      function load(img) {
+        var src = img.getAttribute("data-src");
+        if (!src) return;
+        img.src = src;
+        img.addEventListener("load", function () { img.classList.add("is-loaded"); }, { once: true });
+        img.removeAttribute("data-src");
+      }
+
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              load(entry.target);
+              io.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: "200px 0px" });
+        imgs.forEach(function (img) { io.observe(img); });
+      } else {
+        imgs.forEach(load);
+      }
+    }
+  };
+
+  /* ============================================================
+     MODULE: Journal modal (accessible dialog, focus trap-lite)
+     ============================================================ */
+  var Journal = {
+    entries: [
+      {
+        date: "Entry 01",
+        title: "I rehearsed this and still messed it up",
+        body: [
+          "Had a whole speech ready. Said none of it right in person.",
+          "Writing it down because apparently that's the only format I don't fumble.",
+          "If you're reading this instead of hearing it from me face to face — that's on me too. I'm working on saying things out loud, not just typing them well."
+        ]
+      },
+      {
+        date: "Entry 02",
+        title: "Being right is overrated",
+        body: [
+          "Mistakes might be what make this whole thing interesting. Doesn't make them fun to admit to.",
+          "I'd rather be the guy who admits it fast than the guy who needs a whole apology website to get there. Slightly too late for that second one, but here we are.",
+          "Noted, and not repeating this one."
+        ]
+      },
+      {
+        date: "Entry 03",
+        title: "Shazma, if you're reading this",
+        body: [
+          "I'm not asking you to forget it happened.",
+          "I'm asking for a chance to not do it again — starting now, not from some imaginary improved version of me.",
+          "This whole site is a lot, I know. But a text felt too easy for how wrong I was."
+        ]
+      }
+    ],
+    init: function () {
+      var overlay = document.getElementById("journalModal");
+      var closeBtn = document.getElementById("journalModalClose");
+      var dateEl = document.getElementById("jModalDate");
+      var titleEl = document.getElementById("jModalTitle");
+      var bodyEl = document.getElementById("jModalBody");
+      if (!overlay) return;
+      var lastFocused = null;
+
+      function open(index) {
+        var entry = Journal.entries[index];
+        if (!entry) return;
+        dateEl.textContent = entry.date;
+        titleEl.textContent = entry.title;
+        bodyEl.innerHTML = entry.body.map(function (p) { return "<p>" + p + "</p>"; }).join("");
+        lastFocused = document.activeElement;
+        overlay.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+        closeBtn.focus();
+      }
+
+      function close() {
+        overlay.classList.remove("is-open");
+        document.body.style.overflow = "";
+        if (lastFocused) lastFocused.focus();
+      }
+
+      document.querySelectorAll("[data-journal]").forEach(function (card) {
+        card.addEventListener("click", function () {
+          open(parseInt(card.getAttribute("data-journal"), 10));
+        });
+        card.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            open(parseInt(card.getAttribute("data-journal"), 10));
+          }
+        });
+      });
+
+      closeBtn.addEventListener("click", close);
+      overlay.addEventListener("click", function (e) { if (e.target === overlay) close(); });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && overlay.classList.contains("is-open")) close();
+      });
+    }
+  };
+
+  /* ============================================================
+     MODULE: Vow form — builds a mailto: link with the message
+     ============================================================ */
+  var VowForm = {
+    recipient: "theadeebalam@gmail.com",
+    init: function () {
+      var form = document.getElementById("vowForm");
+      var textarea = document.getElementById("vowMessage");
+      var sentMsg = document.getElementById("vowSentMsg");
+      if (!form) return;
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var message = textarea.value.trim();
+        if (!message) {
+          textarea.focus();
+          return;
+        }
+        var subject = encodeURIComponent("A word back — from Win I Lose");
+        var body = encodeURIComponent(message + "\n\n— sent from the Win I Lose site");
+        var mailto = "mailto:" + VowForm.recipient + "?subject=" + subject + "&body=" + body;
+        window.location.href = mailto;
+        if (sentMsg) sentMsg.classList.add("is-shown");
+      });
+    }
+  };
+
+  /* ============================================================
+     MODULE: Magnetic / ripple buttons (premium micro-interaction)
+     ============================================================ */
+  var ButtonFX = {
+    init: function () {
+      document.querySelectorAll(".btn").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+          var ripple = document.createElement("span");
+          ripple.className = "btn-ripple";
+          var rect = btn.getBoundingClientRect();
+          var size = Math.max(rect.width, rect.height);
+          ripple.style.width = ripple.style.height = size + "px";
+          ripple.style.left = (e.clientX - rect.left - size / 2) + "px";
+          ripple.style.top = (e.clientY - rect.top - size / 2) + "px";
+          btn.appendChild(ripple);
+          requestAnimationFrame(function () { ripple.classList.add("is-animating"); });
+          setTimeout(function () { ripple.remove(); }, 650);
+        });
+      });
+    }
+  };
+
+  /* ============================================================
+     Bootstrap
+     ============================================================ */
+  document.addEventListener("DOMContentLoaded", function () {
+    Loader.init();
+    Theme.init();
+    SmoothScroll.init();
+    Nav.init();
+    Drawer.init();
+    Cursor.init();
+    Reveal.init();
+    HeroFX.init();
+    TimelineSpine.init();
+    Counters.init();
+    Gallery.init();
+    Journal.init();
+    VowForm.init();
+    ButtonFX.init();
+  });
+})();
+
+</script>
+</body>
+</html>
